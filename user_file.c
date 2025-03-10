@@ -129,7 +129,7 @@ void login_user(){
 
 
     else{
-        fprintf(user_file, "> %s: %s\n", current_user -> user_name, current_user -> user_password);
+        fprintf(user_file, "%s: %s\n", current_user -> user_name, current_user -> user_password);
 
     
         printf("\nData added to file!");

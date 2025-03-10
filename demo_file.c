@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Create, Write, Read, Search
 // Create file
 void create_and_write(){
     
