@@ -12,7 +12,6 @@ struct ITEM{
 
 };
 
-
 // Add item 
 void add_item(){
     
@@ -156,19 +155,16 @@ void display_item_list(){
 
 // Delete item
 void delete_item(){
-    
-}
+    // Display list
+    display_item_list();
 
-// Search item
-
-void search_item(){
-    
-    bool read_input = true;
-    char item_to_del[200];
+    char item_to_del[100]; 
+    bool getting_input = true;
 
 
-    while(read_input){
-        printf("\nEnter item to search: ");
+    // ITEM TO DELETE
+    while(getting_input){
+        printf("\nEnter item to be deleted: ");
 
         if(fgets(item_to_del, sizeof(item_to_del), stdin) == NULL){
             printf("Error reading input!\n");
@@ -182,8 +178,85 @@ void search_item(){
 
         }
 
+        else{
+            // Open file to read items
+            FILE *file = fopen("items_added.txt", "r");
+            
+            if(file == NULL){
+                printf("Error opening file!\n");
+                return;
+
+            }
+
+            char each_line[100];
+
+            // Open temporary file
+            FILE *temp_file = fopen("temp.txt", "w");
+
+            if(temp_file == NULL){
+                printf("Error opening temporary file!\n");
+                return;
+
+            }
+
+            // Read each line on the inventory.txt file and print it to the temp file if not a match 
+            while(fgets(each_line, sizeof(each_line), file) != NULL){
+
+                item_to_del[strcspn(item_to_del, "\n")] = 0; // Remove newline character
+
+                // If no match
+                if(strstr(each_line, item_to_del) == NULL){
+                    fprintf(temp_file, "%s", each_line); // Copy to new file
+
+                }
+
+                // Match
+                else{
+                    printf("Item found and deleted!\n");
+                    continue;
+                }
+
+            }
+
+            fclose(file);
+            fclose(temp_file);
+
+            remove("items_added.txt");
+            rename("temp.txt", "items_added.txt");
+            getting_input = false;
+            
+        }
+
+    }
+    
+    
+}
+
+// Search item
+
+void search_item(){
+    
+    bool read_input = true;
+    char item_to_search[200];
+
+
+    while(read_input){
+        printf("\nEnter item to search: ");
+
+        if(fgets(item_to_search, sizeof(item_to_search), stdin) == NULL){
+            printf("Error reading input!\n");
+            continue;
+
+        }
+
+        else if(strcmp(item_to_search, "\n") == 0){
+            printf("You pressed enter!\n");
+            continue;
+
+        }
+
         // Remove new line
-        item_to_del[strcspn(item_to_del, "\n")] = 0;
+        item_to_search[strcspn(item_to_search, "\n")] = 0;
 
         // Open file to search item
         FILE *file = fopen("items_added.txt", "r");
@@ -205,7 +278,7 @@ void search_item(){
             while(fgets(line_by_line, sizeof(line_by_line), file) != NULL){
                 
                 // If found
-                if(strstr(line_by_line, item_to_del) != NULL){
+                if(strstr(line_by_line, item_to_search) != NULL){
                     
                     printf("Match found in line, %d!\n", num_of_lines);
                     read_input = false;
