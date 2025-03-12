@@ -121,6 +121,7 @@ void add_item(){
     fprintf(file, "%s, %d\n", item -> name, item -> price);
 
     fclose(file);
+    free(item);
 
 
 
@@ -139,8 +140,8 @@ void display_item_list(){
 
     char particular_line[256]; // Bytes to take
 
-    printf("\nItems");
-    printf("\n-----\n");
+    printf("\nList of items");
+    printf("\n-------------\n");
 
     // While characters exist in each line
     while(fgets(particular_line, sizeof(particular_line), file) != NULL){
@@ -150,6 +151,88 @@ void display_item_list(){
     printf("\n");
     printf("Done printing!\n");
     
+}
+
+
+// Delete item
+void delete_item(){
+    
+}
+
+// Search item
+
+void search_item(){
+    
+    bool read_input = true;
+    char item_to_del[200];
+
+
+    while(read_input){
+        printf("\nEnter item to search: ");
+
+        if(fgets(item_to_del, sizeof(item_to_del), stdin) == NULL){
+            printf("Error reading input!\n");
+            continue;
+
+        }
+
+        else if(strcmp(item_to_del, "\n") == 0){
+            printf("You pressed enter!\n");
+            continue;
+
+        }
+
+        // Remove new line
+        item_to_del[strcspn(item_to_del, "\n")] = 0;
+
+        // Open file to search item
+        FILE *file = fopen("items_added.txt", "r");
+            
+        if(file == NULL){
+            printf("Error opening file! Retrying...\n");
+            continue;
+
+        }
+
+        else{
+
+            char line_by_line[256]; // Horizontal bytes
+            int num_of_lines = 1;
+            
+            printf("\nSearching list...\n");
+            
+            // While char exists read line by line
+            while(fgets(line_by_line, sizeof(line_by_line), file) != NULL){
+                
+                // If found
+                if(strstr(line_by_line, item_to_del) != NULL){
+                    
+                    printf("Match found in line, %d!\n", num_of_lines);
+                    read_input = false;
+                    break;
+
+                }
+
+
+                else{
+                    printf("No match found in line, %d!\n", num_of_lines);
+                    num_of_lines++;
+                    continue;
+                }
+
+                
+
+
+            }
+            
+        }
+
+
+
+    }
+    
+
+
 }
 
 // Invalid option
@@ -174,7 +257,9 @@ void manage_dashboard(){
     printf("\n=========");
     printf("\n1.Add item");
     printf("\n2.View item list");
-    printf("\n3.Close application\n");
+    printf("\n3.Delete item");
+    printf("\n4.Search item");
+    printf("\n5.Close application\n");
 
 
     int choice;
@@ -220,8 +305,21 @@ void manage_dashboard(){
 
         else if(choice == 3){
             getchar();
-            printf("\nExited");
-            printf("\n\n");
+            delete_item();
+            continue;
+
+        }
+
+        else if(choice == 4){
+            getchar();
+            search_item();
+            continue;
+
+        }
+
+        else if(choice == 5){
+            getchar();
+            printf("See you later!\n");
             is_running = false;
 
 

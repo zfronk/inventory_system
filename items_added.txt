@@ -1,3 +1,4 @@
-Money gun, 20000
-Banana stalks, 20000
 Mangoes, 20500
+Tomatoes, 20000
+Guava, 200
+Melon, 2000
