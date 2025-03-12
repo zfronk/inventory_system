@@ -315,6 +315,11 @@ void invalid_option(){
     return;
 }
 
+void close_application(){
+    printf("See you later\n");
+
+}
+
 
 
 // Manage dashboard
@@ -392,7 +397,7 @@ void manage_dashboard(){
 
         else if(choice == 5){
             getchar();
-            printf("See you later!\n");
+            close_application();
             is_running = false;
 
 
