@@ -33,7 +33,7 @@ Execute the compiled program:
 3. Enter '5' to exit the application.
 
 ## File Structure
-- `inventory_system.c` - Main source code
+- `inventory.c` - Main source code
 - `items_added.txt` - Storage file for inventory items
 
 ## Future Enhancements
