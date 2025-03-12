@@ -25,13 +25,7 @@ void add_item(){
 
     }
     
-    
-    // printf("\nAdding item name...");
-    // printf("\n");
-    
-
     // ITEM NAME
-    
     bool prompt_item_name = true;
     
     // Keep checking for item - name
@@ -66,8 +60,6 @@ void add_item(){
     }
 
 
-    // printf("\nAdding item price...");
-    // printf("\n");
 
     // ITEM PRICE
     bool prompt_item_price = true;
@@ -117,13 +109,46 @@ void add_item(){
     }
 
 
+    // Add added item to file
+    FILE *file = fopen("items_added.txt", "a");
+
+    if(file == NULL){
+        printf("Error creating file!\n");
+
+    }
+
+    // Add text to file
+    fprintf(file, "%s, %d\n", item -> name, item -> price);
+
+    fclose(file);
+
+
 
 }
 
 // View list of items
 void display_item_list(){
-    printf("\nYou're viewing the item list");
+
+    // Open file to read items
+    FILE *file = fopen("items_added.txt", "r");
+
+    if(file == NULL){
+        printf("Error reading file!\n");
+
+    }
+
+    char particular_line[256]; // Bytes to take
+
+    printf("\nItems");
+    printf("\n-----\n");
+
+    // While characters exist in each line
+    while(fgets(particular_line, sizeof(particular_line), file) != NULL){
+        printf("%s", particular_line);
+    }
+
     printf("\n");
+    printf("Done printing!\n");
     
 }
 
