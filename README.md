@@ -18,13 +18,13 @@ The Warehouse Inventory Management System is a C-based console application desig
 ### Compilation
 Use the following command to compile the program:
 ```sh
-gcc -o inventory_system inventory_system.c
+gcc -o run.exe inventory_system.c
 ```
 
 ### Running the Application
 Execute the compiled program:
 ```sh
-./inventory_system
+./run.exe
 ```
 
 ### Navigating the Application
@@ -47,7 +47,4 @@ This project is open-source and available for modification and distribution.
 
 ## Author
 Steve
-
----
-Feel free to modify this README as you refine the application!
 
